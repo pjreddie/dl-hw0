@@ -1,0 +1,17 @@
+*.o
+*.a
+*.so
+*.dSYM
+*.csv
+*.out
+*.pyc
+.fuse*
+libuwnet*
+uwnet
+
+# OS Generated #
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
