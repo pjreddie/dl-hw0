@@ -3,7 +3,7 @@ mkdir -p submit
 
 prepare () {
     if [[ $(git diff $1 | wc -c) -eq 0 ]]; then 
-        echo "WARNING: $1 is unchanged."
+        echo "WARNING: $1 is unchanged according to git."
     fi
     cp $1 submit/
 }
