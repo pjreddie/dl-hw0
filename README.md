@@ -205,5 +205,11 @@ Complete the notebook to train a PyTorch model on the MNIST dataset.
 
 ## Turn it in ##
 
-Use the dropbox link on the class website.
+First run the `collate.sh` script by running:
+
+    bash collate.sh
+    
+This will create the file `submit.tar.gz` in your directory with all the code you need to submit. The command will check to see that your files have changed relative to the version stored in the `git` repository. If it hasn't changed, figure out why, maybe you need to download your ipynb from google?
+
+Submit `submit.tar.gz` in the file upload field for Homework 0 on Canvas.
 
