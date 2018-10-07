@@ -175,6 +175,24 @@ Then try training a model on MNIST!
 
     python trymnist.py
 
+Every batch the model will print out the loss and at the end of training your model will run on the training and testing data and give you final accuracy results. Try playing around with different model structures and hyperparameter values. Can you get >97% accuracy?
+
+### 4.3 Train on CIFAR ###
+
+The CIFAR-10 dataset is similar in size to MNIST but much more challenging - https://www.cs.toronto.edu/~kriz/cifar.html. Instead of classifying digits, you will train a classifier to recognize these objects:
+
+![cifar10](figs/cifar.png)
+
+First get the dataset:
+
+    wget https://pjreddie.com/media/files/cifar.tar.gz
+    tar xvzf cifar.tar.gz
+
+Then try training on CIFAR:
+
+    python trycifar.py
+
+How do your results compare to MNIST? If you changed your model for MNIST, do similar changes affect your CIFAR results in the same way?
 
 ## 5. Running on the GPU with PyTorch ##
 
