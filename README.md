@@ -34,7 +34,7 @@ Fill in the code to perform the weighted sum. The operation you are performing i
 
 ### 1.4 `matmul` ###
 
-Implement matrix multiplication. No need to do anything crazy, 3 `for` loops oughta do it. However, good cache utilization will make your operation much faster! Once you've got something you can run: `./uwnet test`. This doesn't actually check if your code is correct but it will time a bunch of matrix multiplications for you. Try optimizing your loop ordering to get the fastest time. On this test for my code it takes about 4 seconds but your processing speed may vary!
+Implement matrix multiplication. No need to do anything crazy, 3 `for` loops oughta do it. However, good cache utilization will make your operation much faster! Once you've written something you can run: `./uwnet test`. This doesn't actually check if your code is correct but it will time a bunch of matrix multiplications for you. Try optimizing your loop ordering to get the fastest time. You don't need to change anything except the loop order, there's just one ordering that's MUCH faster. On this test for my code it takes about 4 seconds but your processing speed may vary!
 
 ## 2. Activation functions ##
 
