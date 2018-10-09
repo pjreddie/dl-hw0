@@ -107,7 +107,7 @@ matrix matmul(matrix a, matrix b)
             for(k = 0; k < a.cols; k++){ // go through a's columns / b's rows
                 sum += a.data[i * a.cols + k] * b.data[b.cols * k + j];
             }
-            c.data[i * a.rows + j] = sum;
+            c.data[i * c.cols + j] = sum;
             m++;
         }
     }
