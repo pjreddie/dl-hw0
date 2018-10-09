@@ -23,7 +23,7 @@ class IMAGE(Structure):
 class MATRIX(Structure):
     _fields_ = [("rows", c_int),
                 ("cols", c_int),
-                ("data", POINTER(POINTER(c_float))),
+                ("data", POINTER(c_float)),
                 ("shallow", c_int)]
 
 class DATA(Structure):
@@ -77,25 +77,13 @@ set_pixel = lib.set_pixel
 set_pixel.argtypes = [IMAGE, c_int, c_int, c_int, c_float]
 set_pixel.restype = None
 
-rgb_to_grayscale = lib.rgb_to_grayscale
-rgb_to_grayscale.argtypes = [IMAGE]
-rgb_to_grayscale.restype = IMAGE
-
 copy_image = lib.copy_image
 copy_image.argtypes = [IMAGE]
 copy_image.restype = IMAGE
 
-rgb_to_hsv = lib.rgb_to_hsv
-rgb_to_hsv.argtypes = [IMAGE]
-rgb_to_hsv.restype = None
-
 clamp_image = lib.clamp_image
 clamp_image.argtypes = [IMAGE]
 clamp_image.restype = None
-
-hsv_to_rgb = lib.hsv_to_rgb
-hsv_to_rgb.argtypes = [IMAGE]
-hsv_to_rgb.restype = None
 
 shift_image = lib.shift_image
 shift_image.argtypes = [IMAGE, c_int, c_float]
@@ -106,7 +94,7 @@ load_image_lib.argtypes = [c_char_p]
 load_image_lib.restype = IMAGE
 
 def load_image(f):
-    return load_image_lib(f.encode('ascii'))
+    return load_image_lib(f.encode('utf-8'))
 
 # Filetypes
 (PNG, BMP, TGA, JPG) = range(4)
@@ -116,10 +104,10 @@ save_image_options_lib.argtypes = [IMAGE, c_char_p, c_int, c_int]
 save_image_options_lib.restype = None
 
 def save_image(im, f):
-    return save_image_options_lib(im, f.encode('ascii'), JPG, 80)
+    return save_image_options_lib(im, f.encode('utf-8'), JPG, 80)
 
 def save_png(im, f):
-    return save_image_options_lib(im, f.encode('ascii'), PNG, 0)
+    return save_image_options_lib(im, f.encode('utf-8'), PNG, 0)
 
 
 nn_resize = lib.nn_resize
@@ -145,13 +133,42 @@ forward_net = lib.forward_net
 forward_net.argtypes = [NET, MATRIX]
 forward_net.restype = MATRIX
 
-load_image_classification_data = lib.load_image_classification_data
-load_image_classification_data.argtypes = [c_char_p, c_char_p]
-load_image_classification_data.restype = DATA
+load_image_classification_data_lib = lib.load_image_classification_data
+load_image_classification_data_lib.argtypes = [c_char_p, c_char_p]
+load_image_classification_data_lib.restype = DATA
+
+def load_image_classification_data(images, labels):
+    return load_image_classification_data_lib(images.encode('utf-8'), labels.encode('utf-8'))
 
 make_connected_layer = lib.make_connected_layer
 make_connected_layer.argtypes = [c_int, c_int, c_int]
 make_connected_layer.restype = LAYER
+
+save_weights_lib = lib.save_weights
+save_weights_lib.argtypes = [NET, c_char_p]
+save_weights_lib.restype = None
+
+load_weights_lib = lib.load_weights
+load_weights_lib.argtypes = [NET, c_char_p]
+load_weights_lib.restype = None
+
+def save_weights(net, f):
+    save_weights_lib(net, f.encode('utf-8'))
+
+def load_weights(net, f):
+    load_weights_lib(net, f.encode('utf-8'))
+
+print_matrix = lib.print_matrix
+print_matrix.argtypes = [MATRIX]
+print_matrix.restype = None
+
+def run_net_image(net, im):
+    m = MATRIX()
+    m.rows = 1
+    m.cols = im.h*im.w*im.c
+    m.data = im.data
+    m.shallow = 1
+    return forward_net(net, m)
 
 def make_net(layers):
     m = NET()

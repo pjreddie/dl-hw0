@@ -6,7 +6,7 @@
 #include "test.h"
 #include "args.h"
 
-void tryml()
+void try_mnist()
 {
     data train = load_image_classification_data("mnist.train", "mnist.labels");
     data test  = load_image_classification_data("mnist.test", "mnist.labels");
@@ -30,19 +30,12 @@ void tryml()
 
 int main(int argc, char **argv)
 {
-    char *in = find_char_arg(argc, argv, "-i", "data/dog.jpg");
-    char *out = find_char_arg(argc, argv, "-o", "out");
-    //float scale = find_float_arg(argc, argv, "-s", 1);
     if(argc < 2){
-        printf("usage: %s [test | grayscale]\n", argv[0]);  
+        printf("usage: %s [test | trymnist]\n", argv[0]);  
+    } else if (0 == strcmp(argv[1], "trymnist")){
+        try_mnist();
     } else if (0 == strcmp(argv[1], "test")){
         run_tests();
-    } else if (0 == strcmp(argv[1], "grayscale")){
-        image im = load_image(in);
-        image g = rgb_to_grayscale(im);
-        save_image(g, out);
-        free_image(im);
-        free_image(g);
     }
     return 0;
 }
