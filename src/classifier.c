@@ -52,7 +52,7 @@ void train_image_classifier(net m, data d, int batch, int iters, float rate, flo
         data b = random_batch(d, batch);
         forward_net(m, b.X);
         float err = cross_entropy_loss(b.y, m.layers[m.n-1]);
-        fprintf(stderr, "%06d: Loss: %f\n", e, err);
+        // fprintf(stderr, "%06d: Loss: %f\n", e, err);
         backward_net(m);
         update_net(m, rate/batch, momentum, decay);
         free_data(b);
