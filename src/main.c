@@ -8,8 +8,8 @@
 
 void try_mnist()
 {
-    data train = load_image_classification_data("mnist.train", "mnist.labels");
-    data test  = load_image_classification_data("mnist.test", "mnist.labels");
+    data train = load_image_classification_data("mnist/mnist.train", "mnist/mnist.labels");
+    data test  = load_image_classification_data("mnist/mnist.test", "mnist/mnist.labels");
 
     net n = {0};
     n.layers = calloc(2, sizeof(layer));
