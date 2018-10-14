@@ -34,7 +34,7 @@ void backward_bias(matrix delta, matrix db)
 // Run a connected layer on input
 // layer l: pointer to layer to run
 // matrix in: input to layer
-// returns: the same layer, modified after running
+// returns: the result of running the layer: f(wx + b)
 matrix forward_connected_layer(layer l, matrix in)
 {
     // TODO: 3.1 - run the network forward
