@@ -1,3 +1,4 @@
+
 #include "matrix.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,12 +28,13 @@ matrix make_matrix(int rows, int cols)
 matrix random_matrix(int rows, int cols, float s)
 {
     matrix m = make_matrix(rows, cols);
-    int i, j;
-    for(i = 0; i < rows; ++i){
-        for(j = 0; j < cols; ++j){
-            m.data[i*cols + j] = 2*s*(rand()%1000/1000.0) - s;    
-        }
-    }
+    for (int i=0; i < rows*cols; i++)
+      {
+	//m.data[i] = 2*s*(rand()%1000/1000.0) - s;
+	m.data[i] = (float)i+1;
+	//printf(">>> %f \n", m.data[i]);
+      }
+    
     return m;
 }
 
@@ -52,9 +54,16 @@ matrix copy_matrix(matrix m)
 {
     matrix c = make_matrix(m.rows, m.cols);
     // TODO: 1.1 - Fill in the new matrix
-
-
+    for (int i=0; i < m.rows*m.cols; i++)
+      {
+	c.data[i] = m.data[i];
+      }
     return c;
+}
+
+float matrix_get(matrix m, int row_index, int col_index)
+{
+  return m.data[((m.cols*row_index)+col_index)];
 }
 
 // Transpose a matrix
@@ -63,10 +72,47 @@ matrix copy_matrix(matrix m)
 matrix transpose_matrix(matrix m)
 {
     // TODO: 1.2 - Make a matrix the correct size, fill it in
-    matrix t = make_matrix(1,1);
-
-
+    matrix t = make_matrix(m.cols, m.rows);
+    for (int j=0; j < m.cols; j++)
+      {
+	for (int i=0; i < m.rows; i++)
+	  {
+	    t.data[((j*m.rows)+i)] = matrix_get(m, i, j); 
+	  }
+      }
     return t;
+}
+
+void matrix_set(matrix m, int row_index, int col_index, float val)
+{
+  m.data[((m.cols*row_index)+col_index)] = val;
+}
+
+matrix matrix_dot(matrix w, matrix x)
+{
+  float tmp;
+  matrix m = make_matrix(w.rows, x.cols);
+  
+  assert(w.cols == x.rows);
+  for (int i=0; i < w.cols; i++)
+    {
+      tmp = 0.0;
+      for (int j=0; j < x.rows; j++)
+	{
+	  tmp += matrix_get(w, i, j) * matrix_get(x, j, 0);
+	}
+      matrix_set(m, i, 0, tmp);
+    }
+  return m;
+}
+
+
+void matrix_add(matrix w, matrix b)
+{
+  for (int i = 0; i < (w.rows*w.cols); i++)
+    {
+      b.data[i] += w.data[i];
+    }
 }
 
 // Perform y = ax + y

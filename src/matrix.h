@@ -15,6 +15,10 @@ typedef struct matrix{
     int shallow;
 } matrix;
 
+float matrix_get(matrix m, int row_index, int col_index);
+void matrix_set(matrix m, int row_index, int col_index, float val);
+matrix matrix_dot(matrix w, matrix x);
+void matrix_add(matrix w, matrix b);
 
 // Make empty matrix filled with zeros
 // int rows: number of rows in matrix

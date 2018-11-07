@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5,6 +6,7 @@
 #include "image.h"
 #include "test.h"
 #include "args.h"
+#include "matrix.h"
 
 void try_mnist()
 {
@@ -20,6 +22,7 @@ void try_mnist()
     int batch = 128;
     int iters = 5000;
     float rate = .01;
+
     float momentum = .9;
     float decay = .0;
 
@@ -30,12 +33,15 @@ void try_mnist()
 
 int main(int argc, char **argv)
 {
-    if(argc < 2){
-        printf("usage: %s [test | trymnist]\n", argv[0]);  
-    } else if (0 == strcmp(argv[1], "trymnist")){
-        try_mnist();
-    } else if (0 == strcmp(argv[1], "test")){
-        run_tests();
-    }
-    return 0;
+  matrix w = random_matrix(3, 4, .9);
+  matrix x = random_matrix(4, 1, .9);
+  matrix b = random_matrix(4, 1, .9);
+  printf("-------------\n");
+  print_matrix(b);
+  matrix m = matrix_dot(w, x);
+  print_matrix(m);
+  matrix_add(m, b);
+  printf("-------------\n");
+  print_matrix(b);
+  return 0;
 }
