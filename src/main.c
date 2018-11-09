@@ -31,17 +31,17 @@ void try_mnist()
     printf("Testing  accuracy: %f\n", accuracy_net(n, test));
 }
 
-int main(int argc, char **argv)
-{
-  matrix w = random_matrix(3, 4, .9);
-  matrix x = random_matrix(4, 1, .9);
-  matrix b = random_matrix(4, 1, .9);
-  printf("-------------\n");
-  print_matrix(b);
-  matrix m = matrix_dot(w, x);
-  print_matrix(m);
-  matrix_add(m, b);
-  printf("-------------\n");
-  print_matrix(b);
-  return 0;
-}
+/* int main(int argc, char **argv) */
+/* { */
+/*   matrix a = random_matrix(4, 1, .9); */
+/*   matrix b = random_matrix(4, 1, .9); */
+/*   printf("-------------\n"); */
+/*   print_matrix(a); */
+/*   printf("-------------\n"); */
+/*   print_matrix(b); */
+/*   printf("-------------\n"); */
+/*   print_matrix(matrix_sub(a, b)); */
+/*   printf("-------------\n"); */
+/*   print_matrix(matrix_mul(a, b)); */
+/*   return 0; */
+/* } */

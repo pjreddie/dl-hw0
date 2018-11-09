@@ -2,7 +2,8 @@ OPENCV=0
 OPENMP=0
 DEBUG=0
 
-OBJ=main.o image.o args.o test.o matrix.o list.o data.o classifier.o net.o connected_layer.o activations.o
+#OBJ=feedforward.o main.o image.o args.o test.o matrix.o list.o data.o classifier.o net.o connected_layer.o activations.o
+OBJ=feedforward.o matrix.o list.o mnist.o
 EXOBJ=test.o
 
 VPATH=./src/:./
@@ -41,7 +42,9 @@ EXOBJS = $(addprefix $(OBJDIR), $(EXOBJ))
 OBJS = $(addprefix $(OBJDIR), $(OBJ))
 DEPS = $(wildcard src/*.h) Makefile 
 
-all: obj $(SLIB) $(ALIB) $(EXEC)
+#all: obj $(SLIB) $(ALIB) $(EXEC)
+
+all: obj $(EXEC)
 
 $(EXEC): $(EXOBJS) $(OBJS)
 	$(CC) $(COMMON) $(CFLAGS) $^ -o $@ $(LDFLAGS) 

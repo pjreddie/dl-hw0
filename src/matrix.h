@@ -19,6 +19,12 @@ float matrix_get(matrix m, int row_index, int col_index);
 void matrix_set(matrix m, int row_index, int col_index, float val);
 matrix matrix_dot(matrix w, matrix x);
 void matrix_add(matrix w, matrix b);
+matrix sigmoid(matrix z);
+matrix sigmoid_prime(matrix z);
+matrix cost_derivative(matrix output_activations, matrix y);
+
+matrix matrix_sub(matrix a, matrix b);
+matrix matrix_mul(matrix a, matrix b);
 
 // Make empty matrix filled with zeros
 // int rows: number of rows in matrix

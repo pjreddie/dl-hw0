@@ -1,4 +1,3 @@
-
 #include "matrix.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,6 +5,62 @@
 #include <assert.h>
 #include <math.h>
 
+matrix sigmoid(matrix z)
+{
+  matrix m = make_matrix(z.rows, z.cols);
+  for (int i = 0; i < (z.rows*z.cols); i++)
+    {
+      m.data[i] = 1.0/(1.0+exp(-z.data[i]));
+    }
+  return m;
+}
+
+matrix sigmoid_prime(matrix z)
+{
+  float one = 1.0;
+
+  matrix s = sigmoid(z);
+  matrix ones = make_matrix(z.rows, z.cols);
+
+  for (int i = 0; i < (z.rows*z.cols); i++)
+    {
+      ones.data[i] = one;
+    }
+
+  return matrix_mul(s, matrix_sub(ones, s));
+}
+
+matrix matrix_mul(matrix a, matrix b)
+{
+  assert(a.cols == b.cols);
+  assert(a.rows == b.rows);
+  matrix m = make_matrix(a.rows, a.cols);
+  for (int i = 0; i < (a.rows*a.cols); i++)
+    {
+      m.data[i] = a.data[i]*b.data[i];
+    }
+  return m;
+}
+
+
+
+matrix matrix_sub(matrix a, matrix b)
+{
+  assert(a.cols == b.cols);
+  assert(a.rows == b.rows);
+  matrix m = make_matrix(a.rows, a.cols);
+  for (int i = 0; i < (a.rows*a.cols); i++)
+    {
+      m.data[i] = a.data[i] - b.data[i];
+    }
+  return m;
+}
+
+
+matrix cost_derivative(matrix output_activations, matrix y)
+{
+  return matrix_sub(output_activations, y);
+}
 
 // Make empty matrix filled with zeros
 // int rows: number of rows in matrix
@@ -30,8 +85,8 @@ matrix random_matrix(int rows, int cols, float s)
     matrix m = make_matrix(rows, cols);
     for (int i=0; i < rows*cols; i++)
       {
-	//m.data[i] = 2*s*(rand()%1000/1000.0) - s;
-	m.data[i] = (float)i+1;
+	m.data[i] = 2*s*(rand()%1000/1000.0) - s;
+	//m.data[i] = (float)i+1;
 	//printf(">>> %f \n", m.data[i]);
       }
     
