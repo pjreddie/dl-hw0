@@ -40,7 +40,7 @@ float cross_entropy_loss(matrix y, layer l)
     float sum = 0;
     for(i = 0; i < y.cols*y.rows; ++i){
         sum += -y.data[i]*log(preds.data[i]);
-        delta.data[i] += y.data[i] - preds.data[i];
+        delta.data[i] += preds.data[i] - y.data[i];
     }
     return sum/y.rows;
 }

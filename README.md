@@ -120,15 +120,15 @@ We want to update our weights using SGD with momentum and weight decay.
 
 Our normal SGD update with learning rate η is:
 
-    w = w + η*dL/dw
+    w = w - η*dL/dw
 
 With weight decay λ we get:
 
-    w = w + η*(dL/dw - λw)
+    w = w + η*(-dL/dw - λw)
 
 With momentum we first calculate the amount we'll change by as a scalar of our previous change to the weights plus our gradient and weight decay:
     
-    Δw = m*Δw_{prev} + dL/dw - λw
+    Δw = m*Δw_{prev} - dL/dw - λw
 
 Then we apply that change:
     
@@ -136,19 +136,23 @@ Then we apply that change:
 
 In our case, we'll always try to keep track of Δw in our layer's `l.dw`. When we start the update method, our `l.dw` will store:
 
-    l.dw = m*Δw_{prev} + dL/dw
+    l.dw = m*Δw_{prev} - dL/dw
 
 `m*Δw_{prev}` will come from the last updates we applied, and we added on `dw` during the backward computation. Our first step is to subtract off the weight decay (using axpy) so we have:
 
-    l.dw = m*Δw_{prev} + dL/dw - λw
+    l.dw = m*Δw_{prev} - dL/dw - λw
 
 This is the same as the weight updates we want to make, `Δw`. Next we need to add a scaled version of this into our current weights (also using axpy).
+
+    l.w = l.w + rate*l.dw
 
 Before we applied the updates, `l.dw = Δw`, but after we apply them, `l.dw = Δw_{prev}`. Thus our final step is to scale this vector by our momentum term so that:
 
     l.dw = m*Δw_{prev}
 
 Then during our next backward phase we are ready to add in some new `dL/dw`s!
+
+You will do a similar process with your biases but there is no need to add in the weight decay, just the momentum.
 
 ## 4. Training your network! ##
 
