@@ -32,16 +32,6 @@ void update_net(net m, float rate, float momentum, float decay)
     }
 }
 
-void write_matrix(matrix m, FILE *fp)
-{
-    fwrite(m.data, sizeof(float), m.rows*m.cols, fp);
-}
-
-void read_matrix(matrix m, FILE *fp)
-{
-     fread(m.data, sizeof(float), m.rows*m.cols, fp);
-}
-
 void file_error(char *filename)
 {
     fprintf(stderr, "Couldn't open file %s\n", filename);
