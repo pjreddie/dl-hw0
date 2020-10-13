@@ -40,6 +40,8 @@ Implement matrix multiplication. No need to do anything crazy, 3 `for` loops oug
 
 An important part of machine learning, be it linear classifiers or neural networks, is the activation function you use. We'll define our activation functions in `activations.c`. This is also a good time to check out `uwnet.h`, which gives you an overview of the structures will be using for building our models and, important for this, what activation functions we have available to us!
 
+For Leaky ReLU use an alpha = 0.1 if you want to pass the tests!
+
 ### 2.1 `activate_matrix` ###
 
 Fill in `void activate_matrix(matrix m, ACTIVATION a)` to modify `m` to be `f(m)` applied elementwise where the function `f` is given by what the activation `a` is.
