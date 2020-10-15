@@ -141,6 +141,7 @@ void test_gradient_matrix()
     TEST(same_matrix(truth_glrelu, glrelu));
     TEST(same_matrix(truth_gsoft, gsoft));
     free_matrix(a);
+    free_matrix(y);
     free_matrix(glog);
     free_matrix(grelu);
     free_matrix(glrelu);
@@ -153,8 +154,8 @@ void test_gradient_matrix()
 
 void test_connected_layer()
 {
-    matrix a = load_matrix("data/test/a.matrix");
-    matrix b = load_matrix("data/test/b.matrix");
+    matrix x = load_matrix("data/test/a.matrix");
+    matrix w = load_matrix("data/test/b.matrix");
     matrix dw = load_matrix("data/test/dw.matrix");
     matrix db = load_matrix("data/test/db.matrix");
     matrix delta = load_matrix("data/test/delta.matrix");
@@ -167,17 +168,21 @@ void test_connected_layer()
     matrix updated_w = load_matrix("data/test/updated_w.matrix");
     matrix updated_b = load_matrix("data/test/updated_b.matrix");
 
-    matrix bias = load_matrix("data/test/bias.matrix");
+    matrix b = load_matrix("data/test/bias.matrix");
     matrix truth_out = load_matrix("data/test/out.matrix");
     layer l = make_connected_layer(64, 16, LRELU);
-    l.w = b;
-    l.b = bias;
+    free_matrix(l.w);
+    free_matrix(l.b);
+    free_matrix(l.dw);
+    free_matrix(l.db);
+    l.w = w;
+    l.b = b;
     l.dw = dw;
     l.db = db;
-    matrix out = l.forward(l, a);
+    matrix out = l.forward(l, x);
     TEST(same_matrix(truth_out, out));
 
-
+    free_matrix(*l.delta);
     l.delta[0] = delta;
     l.backward(l, prev_delta);
     TEST(same_matrix(truth_prev_delta, prev_delta));
@@ -190,11 +195,18 @@ void test_connected_layer()
     TEST(same_matrix(updated_w, l.w));
     TEST(same_matrix(updated_b, l.b));
 
-    free_matrix(a);
-    free_matrix(b);
-    free_matrix(bias);
+    free_matrix(x);
     free_matrix(out);
     free_matrix(truth_out);
+    free_layer(l);
+    free_matrix(prev_delta);
+    free_matrix(truth_prev_delta);
+    free_matrix(truth_db);
+    free_matrix(truth_dw);
+    free_matrix(updated_db);
+    free_matrix(updated_dw);
+    free_matrix(updated_b);
+    free_matrix(updated_w);
 }
 
 

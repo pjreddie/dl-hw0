@@ -45,6 +45,8 @@ typedef struct {
 matrix forward_net(net m, matrix X);
 void backward_net(net m);
 void update_net(net m, float rate, float momentum, float decay);
+void free_layer(layer l);
+void free_net(net n);
 
 typedef struct{
     matrix X;
