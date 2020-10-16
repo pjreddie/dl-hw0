@@ -12,6 +12,8 @@ echo "Creating tarball..."
 prepare src/matrix.c
 prepare src/activations.c
 prepare src/connected_layer.c
+prepare trymnist.py
+prepare trycifar.py
 prepare mnist_pytorch.ipynb
 
 tar cvzf submit.tar.gz submit
